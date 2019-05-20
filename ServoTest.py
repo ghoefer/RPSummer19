@@ -1,17 +1,24 @@
-#program that opens and closes the server
+program that opens and closes the server
 #with help from Oscar Morrison Blog
-import RPI.GPIO as IO
+import RPi.GPIO as GPIO
 import time
-pintOut = 4
-IO.setwarnings(False)
-IO.setmode(IO.BCM)
-IO.setup(pinOut,IO.OUT)
-p = IO.PWM(pintOut,50)
 
-def openFeeder():
-    print('open feeder')
-    p.start(2.5)
-    p.ChangeDutyCycle(7.5)
-    time.sleep(0.75)
-    p.ChangeDutyCycle(2.5)
-    time.sleep(0.5)
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(12, GPIO.OUT)
+
+p = GPIO.PWM(12, 50)
+
+p.start(7.5)
+
+try:
+    while True:
+        p.ChangeDutyCycle(7.5)
+        time.sleep(1)
+        p.ChangeDutyCycle(2.5)
+        time.sleep(1)
+        p.ChangeDutyCycle(12.5)
+        time.sleep(1)
+except KeyboardInterrupt:
+    p.stop()
+    GPIO.cleanup()
