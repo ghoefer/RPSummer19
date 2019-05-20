@@ -1,4 +1,4 @@
-program that opens and closes the server
+#program that opens and closes the server
 #with help from Oscar Morrison Blog
 import RPi.GPIO as GPIO
 import time
